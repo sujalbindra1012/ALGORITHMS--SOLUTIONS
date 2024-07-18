@@ -10,36 +10,26 @@ void printarr(int arr[], int n)
     }
 }
 
-void binarysearch(int arr[], int n, int target)
+int binarysearch(int arr[], int low, int high, int target)
 {
-    int i = 0;
-    int low = 0;
-    int high = n - 1;
-    int flag = 0;
     int mid = 0;
-
     while (low <= high)
     {
-        int mid = (low + (high - low) / 2);
+        int mid = low + (high - low) / 2;
         if (arr[mid] == target)
         {
-            printf("element found at index : %d", mid + 1);
-            flag = 1;
-            break;
-        }
-        else if (arr[mid] > target)
-        {
-            high = mid - 1;
+            return mid + 1;
         }
         else if (arr[mid] < target)
         {
-            low = mid + 1;
+            return binarysearch(arr, mid + 1, high , target);
+        }
+        else if (arr[mid > target])
+        {
+            return binarysearch(arr, low, mid - 1, target);
         }
     }
-    if (flag == 0)
-    {
-        printf("element not found");
-    }
+    return -1;
 }
 
 int main()
@@ -48,7 +38,7 @@ int main()
     printf("enter number of elements of array : ");
     scanf("%d", &n);
     int arr[10];
-    printf("enter the elements of array : ");
+    printf("enter the sorted elements in array : ");
     for (int i = 0; i < n; i++)
     {
         scanf("%d", &arr[i]);
@@ -59,8 +49,15 @@ int main()
     int target;
     printf("enter the value needs to find : ");
     scanf("%d", &target);
-    binarysearch(arr, n, target);
-    // printf("sorted array is : ");
-    // printarr(arr, n);
+    int found = binarysearch(arr, 0, n, target);
+    if (found == -1)
+    {
+        printf("element is not present");
+    }
+    else
+    {
+        printf("element is present at index : %d", found);
+    }
+
     return 0;
 }
